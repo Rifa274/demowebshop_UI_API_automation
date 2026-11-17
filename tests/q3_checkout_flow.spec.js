@@ -3,7 +3,11 @@ const RegisterPage = require('../pages/RegisterPage');
 const LoginPage = require('../pages/LoginPage');
 const CheckoutPage = require('../pages/CheckoutPage');
 
+ feature/q3_checkout_flow
+test('Q3: Complete checkout flow and order placement', async ({ page }) => {
+
 test('Q3: Product Search, Quantity Increase, E2E Checkout and Order Verification', async ({ page }) => {
+ main
     const registerPage = new RegisterPage(page);
     const loginPage = new LoginPage(page);
     const checkoutPage = new CheckoutPage(page);
@@ -12,7 +16,11 @@ test('Q3: Product Search, Quantity Increase, E2E Checkout and Order Verification
     const randomEmail = `testuser_${Date.now()}@test.com`;
     const password = 'Password123';
 
+ feature/q3_checkout_flow
+   
+
     
+ main
     await registerPage.gotoRegisterPage();
     await registerPage.registerUser('Rifa', 'Tasnia', randomEmail, password);
     expect(await registerPage.getSuccessMessage()).toContain('Your registration completed');
@@ -27,6 +35,13 @@ test('Q3: Product Search, Quantity Increase, E2E Checkout and Order Verification
     await loginPage.login(randomEmail, password);
 
     
+ feature/q3_checkout_flow
+    await page.locator('ul.top-menu').getByRole('link', { name: 'Books', exact: true }).click();
+    
+    
+    await page.click('.product-item:first-child .product-title a');
+    await page.click('input[value="Add to cart"]');
+
     const searchQuery = '14.1-inch Laptop';
     await page.fill('#small-searchterms', searchQuery);
     await page.click('input.search-box-button');
@@ -43,10 +58,26 @@ test('Q3: Product Search, Quantity Increase, E2E Checkout and Order Verification
     
     await page.click('input[value="Add to cart"]');
     await page.waitForSelector('.bar-notification.success', { state: 'visible' });
+ main
 
     
     await page.click('#topcartlink .ico-cart');
     await checkoutPage.proceedToCheckoutFromCart();
+ feature/q3_checkout_flow
+
+   
+    await checkoutPage.fillBillingAddress('Bangladesh', 'Dhaka', 'Road-29', '1200', '01711111111');
+
+    
+    await checkoutPage.completeShippingAndPaymentSteps();
+
+    
+    await checkoutPage.confirmOrder();
+
+    
+    const successTitle = await checkoutPage.getOrderSuccessMessage();
+    expect(successTitle).toContain('Your order has been successfully processed!');
+
     await checkoutPage.fillBillingAddress('United States', 'Dhaka', '123 Test Street', '1200', '01711111111');
 
    
@@ -61,4 +92,5 @@ test('Q3: Product Search, Quantity Increase, E2E Checkout and Order Verification
     const orderNumber = await checkoutPage.getOrderNumber();
     console.log(`Order Placed Successfully! ${orderNumber}`);
     expect(orderNumber).toContain('Order number');
+ main
 });

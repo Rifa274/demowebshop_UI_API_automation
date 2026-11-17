@@ -54,10 +54,12 @@ class CheckoutPage {
     async getOrderSuccessMessage() {
         return await this.orderSuccessTitle.textContent();
     }
+ feature/q3_checkout_flow
     async getOrderNumber() {
         const detailsText = await this.orderNumberText.textContent();
         return detailsText;
     }
+  main
 }
 
 module.exports = CheckoutPage;
