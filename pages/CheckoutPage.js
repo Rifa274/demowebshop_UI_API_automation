@@ -13,13 +13,9 @@ class CheckoutPage {
         this.billingContinueBtn = page.locator('#billing-buttons-container input[value="Continue"]');
 
         this.shippingContinueBtn = page.locator('#shipping-buttons-container input[value="Continue"]');
-
         this.shippingMethodContinueBtn = page.locator('#shipping-method-buttons-container input[value="Continue"]');
-
         this.paymentMethodContinueBtn = page.locator('#payment-method-buttons-container input[value="Continue"]');
-
         this.paymentInfoContinueBtn = page.locator('#payment-info-buttons-container input[value="Continue"]');
-
         this.confirmOrderBtn = page.locator('#confirm-order-buttons-container input[value="Confirm"]');
 
         this.orderSuccessTitle = page.locator('.section.order-completed .title');
@@ -54,12 +50,11 @@ class CheckoutPage {
     async getOrderSuccessMessage() {
         return await this.orderSuccessTitle.textContent();
     }
- feature/q3_checkout_flow
+
     async getOrderNumber() {
         const detailsText = await this.orderNumberText.textContent();
         return detailsText;
     }
-  main
 }
 
 module.exports = CheckoutPage;
