@@ -1,0 +1,110 @@
+{
+  "info": {
+    "_postman_id": "740d567c-3aca-4278-a44f-a8a5bb0aabdc",
+    "name": "Module10_DemoWebShop_API_Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58772867",
+    "_collection_link": "https://go.postman.co/collection/58772867-740d567c-3aca-4278-a44f-a8a5bb0aabdc?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET All Users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\nvar jsonData = pm.response.json();\r\nvar firstUserId = jsonData[0].id; \r\npm.collectionVariables.set(\"userId\", firstUserId);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Single User",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/{{userId}}",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\nvar resData = pm.response.json();\r\nvar reqData = JSON.parse(pm.request.body.raw);\r\n\r\npm.test(\"Returned ID matches stored variable\", function () {\r\n    var storedId = pm.collectionVariables.get(\"userId\");\r\n    pm.expect(resData.id.toString()).to.eql(storedId.toString());\r\n});\r\n\r\npm.test(\"Phone should not be empty\", function () {\r\n    pm.expect(resData.phone).to.be.a('string').and.not.empty;\r\n});\r\n\r\npm.test(\"Name matches updated dynamic name\", function () {\r\n    pm.expect(resData.name).to.eql(reqData.name);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"phone\": \"{{$randomPhoneNumber}}\",\r\n  \"company\": {\r\n    \"name\": \"{{$randomCompanyName}}\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/{{userId}}",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users",
+            "{{userId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "userId",
+      "value": ""
+    }
+  ]
+}
