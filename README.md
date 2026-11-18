@@ -7,7 +7,7 @@ This project contains UI automation tests for the Demo Web Shop website and API 
 ## Website
 
 - Demo Web Shop: https://demowebshop.tricentis.com/
-- API: https://jsonplaceholder.typicode.com/
+- API: https://jsonplaceholder.typicode.com/users
 
 ## Technologies Used
 
