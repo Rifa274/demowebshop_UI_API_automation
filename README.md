@@ -101,7 +101,7 @@ npx playwright install chromium
 ### Run All UI Tests
 
 ```bash
-npx playwright test
+npx playwright test --workers=1
 ```
 
 ### Run Q1: Invalid Login
